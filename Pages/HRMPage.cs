@@ -7,16 +7,20 @@ using System.Threading.Tasks;
 
 namespace PlaywrightDemo.Pages
 {
-    public  class HRMPage
+    public class HRMPage
     {
         private IPage _page;
 
         public HRMPage(IPage page) => _page = page;
 
-        private ILocator UserNameTextBox => _page.Locator("//*[@name='username']").First;
-        private ILocator PasswordTextBox => _page.Locator("//*[@name='password']").First;
+        //private ILocator UserNameTextBox => _page.Locator("//*[@name='username']").First;
+        private ILocator UserNameTextBox => _page.GetByPlaceholder("Username", new() { Exact = true });
 
-        private ILocator LoginBtn => _page.Locator("//button[contains(@class,'login')]").First;
+        //private ILocator PasswordTextBox => _page.Locator("//*[@name='password']").First;
+        private ILocator PasswordTextBox => _page.GetByPlaceholder("Password", new() { Exact=true});
+
+        //private ILocator LoginBtn => _page.Locator("//button[contains(@class,'login')]").First;
+        private ILocator LoginBtn => _page.GetByRole(AriaRole.Button, new() { Name="Login"});
 
         private ILocator SelectNavigationOption(string option) => _page.Locator($"//span[text()='{option}']/ancestor::li").First;
 
